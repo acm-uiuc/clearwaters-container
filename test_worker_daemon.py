@@ -10,5 +10,6 @@ def create_container():
     clearwaters_containers.append(c)
 
 for i in range(3):
-    create_container(cmd)
-    clearwaters_containers[i].logs()
+    create_container()
+    l = clearwaters_containers[i].logs()
+    print(l)
