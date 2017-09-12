@@ -9,12 +9,19 @@ def create_container(cmd):
     
 def get_container_logs(cid):
     c = client.containers.get(cid)
-    print(c.logs())
+    return c.logs()
 
+def stop_container(cid):
+    c = client.containers.get(cid)
+    c.stop()
+
+def start_container(cid):
+    c = client.containers.get(cid)
+    c.start()
+    
 def start_all_containers():
     for c in client.containers.list():
         c.start()
-        print(c.status)
         
 def stop_all_containers():    
     for c in client.containers.list():
