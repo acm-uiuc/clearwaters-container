@@ -1,15 +1,40 @@
 #Just testing the docker-py SDK
-
 import docker
 
 client = docker.from_env()
-clearwaters_containers = []
 
-def create_container():
-    c = client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', detach=True)
-    clearwaters_containers.append(c)
+def create_container(cmd):
+    c = client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
+    return c.id
+    
+def get_container_logs(cid):
+    c = client.containers.get(cid)
+    print(c.logs())
 
-for i in range(3):
-    create_container()
-    l = clearwaters_containers[i].logs()
-    print(l)
+def start_all_containers():
+    for c in client.containers.list():
+        c.start()
+        print(c.status)
+        
+def stop_all_containers():    
+    for c in client.containers.list():
+        c = client.containers.get(id)
+        c.stop()
+
+def run_cmd(cid, cmd):
+    c = client.containers.get(cid)
+    print(c.exec_run(cmd))
+    
+#for i in range(3):
+#    cmd = 'tail -f /dev/null'
+#    id = create_container(cmd)
+#    print('New Container_ID= ' + id)
+
+#start_all_containers()
+
+print('Testing the run command')
+for c in client.containers.list():
+    run_cmd(c.id, 'echo hello world from '+c.id)
+
+print(client.containers.list())
+
