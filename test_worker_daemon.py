@@ -18,23 +18,22 @@ def start_all_containers():
         
 def stop_all_containers():    
     for c in client.containers.list():
-        c = client.containers.get(id)
         c.stop()
 
 def run_cmd(cid, cmd):
     c = client.containers.get(cid)
     print(c.exec_run(cmd))
+
     
+#print('create 3 new docker containers')
 #for i in range(3):
 #    cmd = 'tail -f /dev/null'
 #    id = create_container(cmd)
 #    print('New Container_ID= ' + id)
 
-#start_all_containers()
 
-print('Testing the run command')
-for c in client.containers.list():
-    run_cmd(c.id, 'echo hello world from '+c.id)
+#print('Testing the run command')
+#for c in client.containers.list():
+#    run_cmd(c.id, 'echo hello world from '+c.id)
 
-print(client.containers.list())
-
+stop_all_containers()
