@@ -1,35 +1,43 @@
 #Just testing the docker-py SDK
 import docker
 
-client = docker.from_env()
 
-def create_container(cmd):
-    c = client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
-    return c.id
-    
-def get_container_logs(cid):
-    c = client.containers.get(cid)
-    return c.logs()
+class CWDockerClient:
+    client = null
 
-def stop_container(cid):
-    c = client.containers.get(cid)
-    c.stop()
-
-def start_container(cid):
-    c = client.containers.get(cid)
-    c.start()
-    
-def start_all_containers():
-    for c in client.containers.list():
-        c.start()
+    def __init__(self):
+        client = docker.from_env()
         
-def stop_all_containers():    
-    for c in client.containers.list():
+    def create_container(cmd):
+        c = client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
+        return c.id
+
+    def get_container_logs(cid):
+        c = client.containers.get(cid)
+        return c.logs()
+
+    def get_all_container_ids():
+        return client.containers.list()
+    
+    def stop_container(cid):
+        c = client.containers.get(cid)
         c.stop()
 
-def run_cmd(cid, cmd):
-    c = client.containers.get(cid)
-    print(c.exec_run(cmd))
+    def start_container(cid):
+        c = client.containers.get(cid)
+        c.start()
+    
+    def start_all_containers():
+        for c in client.containers.list():
+            c.start()
+        
+    def stop_all_containers():    
+        for c in client.containers.list():
+            c.stop()
+
+    def run_cmd(cid, cmd):
+        c = client.containers.get(cid)
+        print(c.exec_run(cmd))
 
     
 #print('create 3 new docker containers')
