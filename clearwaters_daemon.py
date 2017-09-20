@@ -2,7 +2,7 @@ from cw_libs import clearwaters_docker as cwd
 
 docker_client = cwd.CWDockerClient()
 
-docker_client.create_container('echo hello world')
+print(docker_client.create_container('echo hello world'))
 
 containers = docker_client.get_all_container_ids()
 
