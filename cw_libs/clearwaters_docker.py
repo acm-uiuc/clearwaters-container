@@ -6,8 +6,7 @@ class CWDockerClient:
     client = None
     
     def __init__(self):
-        self.client = docker.from_env()
-        self.client.version = 'auto'
+        self.client = docker.from_env(version='auto')
         
     def create_container(self, cmd):
         c = self.client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
