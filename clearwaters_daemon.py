@@ -1,4 +1,4 @@
-import lib/clearwaters_docker as cwd
+from cw_libs import clearwaters_docker as cwd
 
 docker_client = cwd.CWDockerClient()
 
