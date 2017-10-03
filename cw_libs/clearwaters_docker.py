@@ -8,10 +8,18 @@ class CWDockerClient:
     def __init__(self):
         self.client = docker.from_env(version='auto')
         
-    def create_container(self, cmd):
-        c = self.client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
+    def create_container(self, cmd, image=None):
+        if(image is None):
+            c = self.client.containers.run('registry.gitlab.com/acm-uiuc/sigops/clearwaters-docker/ubuntu-mpich-arm64', cmd, detach=True)
+        else:
+            c = self.client.containers.run(image, cmd, detach=True)
+            
         return c.id
 
+    def build_image(self, path):
+        img = self.client.images.build(path);
+        return img
+        
     def get_container_logs(self, cid):
         c = self.client.containers.get(cid)
         return c.logs()
