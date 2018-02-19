@@ -6,7 +6,6 @@ Docker is  a software technology providing operating-system-level virtualization
 
 For SIGOps, through the magic of hardware, multiple containers have been linked together physically through a head node. The head node connects these containers to the internet and users and vice versa (all jobs will be done through this head node). Docker containers have been built with these hardware pieces but have not yet been linked. It would be equivalent to the concept of each being in their own separate universe and unable to communicate with anywhere else.
 
-Our goal going forward is to find out how to enable the docker containers the ability to communicate with each other, essentially by connecting the containers to the internet and pinging them. 
+Difference between node and container: Each node is an independent computer (separate hardware and everything) and the container is as described above.
 
-
-
+Current goal: Able to ping nodes together but cannot access the docker container to ping other containers. Ask Tanshiq what to do. Once we figure that out, start writing Python code that builds network, utilizing ping-ing principles (accessing IP address, etc). 
